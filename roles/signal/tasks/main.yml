@@ -1,0 +1,21 @@
+---
+- name: Add Signal repository key
+  become: true
+  apt_key:
+    url: https://updates.signal.org/desktop/apt/keys.asc
+    state: present
+
+- name: Add Signal repository
+  become: true
+  apt_repository:
+    repo: deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main
+    state: present
+    filename: signal-desktop
+
+- name: Install Signal Messenger
+  become: true
+  apt:
+    name: signal-desktop
+    state: present
+    update_cache: yes
+
