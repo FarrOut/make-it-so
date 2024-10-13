@@ -1,0 +1,33 @@
+---
+- name: Update apt cache
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install required packages
+  become: true
+  apt:
+    name:
+      - software-properties-common
+      - apt-transport-https
+      - ca-certificates
+      - curl
+    state: present
+
+- name: Add Vagrant repository key
+  become: true
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Add Vagrant repository
+  become: true
+  apt_repository:
+    repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main
+    state: present
+
+- name: Install Vagrant
+  become: true
+  apt:
+    name: vagrant
+    state: present

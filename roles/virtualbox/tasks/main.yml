@@ -1,0 +1,33 @@
+---
+- name: Update apt cache
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install required packages
+  become: true
+  apt:
+    name:
+      - software-properties-common
+      - dkms
+    state: present
+
+- name: Add VirtualBox repository key
+  become: true
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
+
+- name: Add VirtualBox repository
+  become: true
+  apt_repository:
+    repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
+    state: present
+
+- name: Install VirtualBox
+  become: true
+  apt:
+    name:
+      - virtualbox
+      - virtualbox-dkms
+    state: present

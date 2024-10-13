@@ -3,4 +3,5 @@
   roles:
     - vscode
     - docker
-
+    - vagrant
+    - virtualbox
