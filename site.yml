@@ -1,3 +1,3 @@
 ---
-- import_playbook: development_playbook.yml
+- import_playbook: devops_playbook.yml
 - import_playbook: messaging_playbook.yml
