@@ -1,21 +1,24 @@
 ---
-- name: Add the Microsoft GPG key
-  become: true
-  apt_key:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-    state: present
-
-- name: Add the VSCode repository
-  become: true
-  apt_repository:
-    repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
-    state: present
-    update_cache: yes
-
 - name: Install Visual Studio Code
-  become: true
-  apt:
-    name: code
-    state: present
-    update_cache: yes
+  include_tasks: 
+    file: install-vscode-ubuntu.yml
+    apply:
+      tags:
+        - vscode
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - vscode
+
+
+- name: Install extensions
+  include_tasks: 
+    file: install-extensions.yml
+    apply:
+      tags:
+        - vscode
+        - extensions
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - vscode
+    - extensions
 

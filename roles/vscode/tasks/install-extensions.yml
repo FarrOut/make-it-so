@@ -1,0 +1,22 @@
+---
+- name: List installed extensions
+  become: no
+  ansible.builtin.command: code --list-extensions  
+  register: extensions
+- debug:
+    var: extensions.stdout    
+
+- name: Install extensions
+  become: no
+  ansible.builtin.command: code --install-extension {{ item }}
+  loop:
+    - dbaeumer.vscode-eslint
+    - ms-azuretools.vscode-docker
+    - redhat.vscode-yaml
+    - ms-python.python
+    - esbenp.prettier-vscode
+    - ms-python.black-formatter
+    - AmazonWebServices.aws-toolkit-vscode
+    - AmazonWebServices.amazon-q-vscode
+    - kddejong.vscode-cfn-lint
+
