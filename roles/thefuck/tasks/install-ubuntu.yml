@@ -1,0 +1,6 @@
+---
+- name: Install thefuck
+  apt:
+    name: thefuck
+    state: present
+    # executable: /usr/bin/pipx

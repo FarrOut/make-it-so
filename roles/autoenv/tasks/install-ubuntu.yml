@@ -1,0 +1,25 @@
+---
+- name: Install required packages
+  apt:
+    name:
+      - python3-pip
+      - git
+    state: present
+
+- name: Clone autoenv repository
+  git:
+    repo: https://github.com/kennethreitz/autoenv.git
+    dest: /opt/autoenv
+    force: yes
+
+- name: Create autoenv symlink
+  file:
+    src: /opt/autoenv/activate.sh
+    dest: /etc/profile.d/autoenv.sh
+    state: link
+
+- name: Ensure autoenv is enabled
+  lineinfile:
+    path: ~/.zshrc
+    line: 'eval "$(autoenv_init -)"'
+    state: present

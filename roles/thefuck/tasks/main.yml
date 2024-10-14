@@ -1,0 +1,16 @@
+---
+- name: Install TheFuck on Ubuntu
+  include_tasks: 
+    file: install-ubuntu.yml
+    apply:
+      tags:
+        - thefuck
+        - plugins
+        - oh-my-zsh
+        - zsh
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - thefuck
+    - plugins
+    - oh-my-zsh
+    - zsh

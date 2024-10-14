@@ -1,0 +1,9 @@
+---
+- name: Install Python 3
+  apt:
+    name: 
+      - python3-full
+      - python3-pip
+      - pipx
+    state: present
+    update_cache: yes
