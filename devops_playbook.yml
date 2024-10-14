@@ -1,7 +1,10 @@
 ---
 - hosts: all
+  become: yes
+  become_method:  sudo  
   roles:
     - vscode
     - docker
     - vagrant
     - virtualbox
+    - git

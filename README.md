@@ -6,5 +6,5 @@ Configuration management to setup your computer just how you like it.
 From project root...
 
 ``` bash
-ansible-playbook -i inventory site.yml -vv
+ansible-playbook -i inventory site.yml -vv --ask-become-pass
 ```
