@@ -1,0 +1,12 @@
+---
+- name: Install ZSH on Ubuntu  
+  include_tasks:
+    file: install-zsh-ubuntu.yml
+    apply:
+      tags:
+        - zsh
+        - shells
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - zsh
+    - shells

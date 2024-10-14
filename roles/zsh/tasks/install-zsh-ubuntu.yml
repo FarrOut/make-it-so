@@ -1,0 +1,53 @@
+# code: language=ansible
+---
+- name: Install required packages
+  become: true
+  apt:
+    name:
+      - curl
+      - zsh
+    state: present
+
+- name: Get current user
+  ansible.builtin.command: whoami
+  become: false
+  register: current_user
+- debug:
+    var: current_user.stdout
+
+- name: Check if Oh My Zsh directory exists
+  become: false
+  stat:
+    path: ~/.oh-my-zsh
+  register: oh_my_zsh_dir
+- debug:
+    var: oh_my_zsh_dir.stat.exists
+
+# - name: Delete Oh My Zsh directory
+#   file:
+#     path: /home/{{ current_user }}/.oh-my-zsh/
+#     state: absent
+#   tags:
+#     - never
+
+- name: Install Oh My Zsh  
+  ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  become: false
+  when: not oh_my_zsh_dir.stat.exists
+
+- name: Make Zsh default shell
+  become: yes
+  ansible.builtin.shell: chsh -s $(which zsh)
+
+- name: Configure
+  become: false
+  template:
+    src: zshrc.j2
+    dest: ~/.zshrc
+
+- name: Check that Zsh is default shell
+  ansible.builtin.command: echo $SHELL
+  become: false
+  register: default_shell
+- debug:
+    var: default_shell.stdout    

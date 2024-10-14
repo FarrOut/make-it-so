@@ -2,3 +2,4 @@
 - import_playbook: devops_playbook.yml
 - import_playbook: messaging_playbook.yml
 - import_playbook: multimedia_playbook.yml
+- import_playbook: os_playbook.yml
