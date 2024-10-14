@@ -1,0 +1,14 @@
+---
+- name: Install Spotify on Ubuntu
+  include_tasks: 
+    file: install-spotify-ubuntu.yml
+    apply:
+      tags:
+        - spotify
+        - multimedia
+        - music    
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - spotify
+    - multimedia
+    - music
