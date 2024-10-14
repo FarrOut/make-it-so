@@ -1,0 +1,22 @@
+---
+
+- name: List available drivers
+  command: ubuntu-drivers list
+  register: drivers
+- debug:
+    var: drivers.stdout_lines
+
+- name: Install latest NVIDIA drivers
+  command: ubuntu-drivers install
+  register: output
+- debug:
+    var: output.stdout
+
+# - name: Reboot the system
+#   reboot:
+#     msg: "Rebooting to load NVIDIA drivers"
+#     connect_timeout: 5
+#     reboot_timeout: 300
+#     pre_reboot_delay: 0
+#     post_reboot_delay: 30
+#     test_command: /usr/bin/uptime

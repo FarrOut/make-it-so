@@ -1,0 +1,72 @@
+---
+- name: Update apt cache
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install required packages
+  become: true
+  apt:
+    name:
+      - software-properties-common
+      - dkms
+    state: present
+    update_cache: yes
+
+- name: Add VirtualBox repository key
+  become: true
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
+
+- name: Add VirtualBox repository
+  become: true
+  apt_repository:
+    repo: deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
+    state: present
+
+- name: Purge VirtualBox
+  become: true
+  apt:
+    name:
+      - virtualbox
+      - virtualbox-dkms
+      - virtualbox-7.1
+      - virtualbox-ext-pack
+    state: absent
+    autoclean: yes
+    autoremove: yes
+    purge: yes
+
+- name: Install VirtualBox
+  become: true
+  apt:
+    name:
+      - virtualbox
+      - virtualbox-ext-pack
+    state: present
+    install_recommends: yes
+    update_cache: yes
+
+# - name: Accept VirtualBox Extension Pack license
+#   command: /usr/share/virtualbox/VBoxExtPackHelperApp --license
+#   register: license_accepted
+#   changed_when: '"accepted" in license_accepted.stdout'
+
+- name: Get current user
+  ansible.builtin.command: whoami
+  become: false
+  register: current_user
+- debug:
+    var: current_user.stdout
+
+- name: Create a new user group  
+  group:
+    name: vboxusers
+    state: present
+
+- name: Add current user to vboxusers group
+  user:
+    name: "{{ current_user.stdout }}"
+    groups: vboxusers
+    append: yes

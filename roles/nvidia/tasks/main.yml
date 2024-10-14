@@ -1,12 +1,14 @@
 ---
-- name: Install VirtualBox on Ubuntu  
+- name: Install Nvidia drivers on Ubuntu  
   include_tasks:
     file: install-ubuntu.yml
     apply:
       tags:
-        - vbox
-        - virtualbox
+        - drivers
+        - gpu
+        - nvidia
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   tags:
-      - vbox
-      - virtualbox
+    - drivers
+    - gpu
+    - nvidia
