@@ -256,3 +256,11 @@ fi
 if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
+
+
+# AWS
+export AWS_REGION=af-south-1
+
+# Oh My Zsh
+## Plugins
+plugins=(git sudo docker docker-compose ansible aws autoenv battery brew colorize common-aliases debian emoji emoji-clock history nmap nvm npm pep8 pip python safe-paste ssh sudo systemd terraform themes thefuck timer vscode virtualenv vagrant vagrant-prompt wp-cli)
