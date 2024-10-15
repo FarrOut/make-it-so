@@ -1,0 +1,28 @@
+---
+- name: Install required packages
+  apt:
+    name:
+      - gnome-control-center
+      - dconf-editor
+    state: present
+
+- name: Enable Night Light
+  become: no
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+    value: "true"
+    state: present
+
+- name: Set Night Light schedule
+  become: no
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-schedule-automatic
+    value: "true"
+    state: present
+
+- name: Set Night Light temperature
+  become: no
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
+    value: "4000"
+    state: present

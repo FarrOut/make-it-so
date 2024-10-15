@@ -1,0 +1,10 @@
+---
+- name: Configure Night Light on Ubuntu  
+  include_tasks:
+    file: install-ubuntu.yml
+    apply:
+      tags:
+        - night-light
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+      - night-light

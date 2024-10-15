@@ -3,6 +3,7 @@
   become: yes
   become_method:  sudo  
   roles:
-    - thefuck
+    # - thefuck
     - zsh
     - nvidia
+    - night-light

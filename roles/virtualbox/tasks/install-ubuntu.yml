@@ -1,9 +1,4 @@
 ---
-- name: Update apt cache
-  become: true
-  apt:
-    update_cache: yes
-
 - name: Install required packages
   become: true
   apt:
@@ -38,21 +33,6 @@
     autoremove: yes
     purge: yes
 
-- name: Install VirtualBox
-  become: true
-  apt:
-    name:
-      - virtualbox
-      - virtualbox-ext-pack
-    state: present
-    install_recommends: yes
-    update_cache: yes
-
-# - name: Accept VirtualBox Extension Pack license
-#   command: /usr/share/virtualbox/VBoxExtPackHelperApp --license
-#   register: license_accepted
-#   changed_when: '"accepted" in license_accepted.stdout'
-
 - name: Get current user
   ansible.builtin.command: whoami
   become: false
@@ -70,3 +50,20 @@
     name: "{{ current_user.stdout }}"
     groups: vboxusers
     append: yes
+
+- name: Install VirtualBox
+  become: true
+  apt:
+    name:
+      - virtualbox
+      - virtualbox-dkms
+      - virtualbox-ext-pack
+    state: absent
+    install_recommends: yes
+    update_cache: yes
+
+# - name: Accept VirtualBox Extension Pack license
+#   command: /usr/share/virtualbox/VBoxExtPackHelperApp --license
+#   register: license_accepted
+#   changed_when: '"accepted" in license_accepted.stdout'
+
