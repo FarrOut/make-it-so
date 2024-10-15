@@ -42,7 +42,7 @@
 - name: Configure
   become: false
   ansible.builtin.copy:
-    src: templates/zshrc.j2
+    src: templates/.zshrc
     dest: ~/.zshrc
 
 - name: Check that Zsh is default shell
