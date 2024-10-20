@@ -1,0 +1,12 @@
+---
+- name: Install Node.JS on Ubuntu
+  include_tasks: 
+    file: install-ubuntu.yml
+    apply:
+      tags:
+        - node
+        - nodejs
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+      - node
+      - nodejs

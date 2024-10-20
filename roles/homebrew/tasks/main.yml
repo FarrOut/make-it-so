@@ -1,0 +1,14 @@
+---
+- name: Install Homerew on Ubuntu
+  include_tasks: 
+    file: install-ubuntu.yml
+    apply:
+      tags:
+        - brew
+        - homerew
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+      - brew
+      - homerew
+  vars:
+    homebrew_prefix: /home/linuxbrew/.linuxbrew

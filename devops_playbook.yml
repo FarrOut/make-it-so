@@ -5,6 +5,7 @@
   roles:
     - vscode
     - python
+    - node
     - docker
     - vagrant
     - virtualbox
