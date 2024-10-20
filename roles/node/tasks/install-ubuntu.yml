@@ -1,12 +1,38 @@
 ---
+- name: Get current user
+  ansible.builtin.command: whoami
+  become: false
+  register: homebrew_user
+- debug:
+    var: homebrew_user.stdout
 
-- name: Install prerequisites
-  apt:
-    name:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg
-    state: present
-    update_cache: yes
+- name: Download Node.JS using Homebrew
+  become: yes
+  become_user: "{{ homebrew_user.stdout }}"
+  shell: |
+    brew install node
 
+
+- name: Verify Node.JS installation
+  become: yes
+  become_user: "{{ homebrew_user.stdout }}"
+  shell: |
+    node -v
+  register: node_version
+  changed_when: false
+
+- name: Display Node.JS version
+  debug:
+    var: node_version.stdout_lines
+
+- name: Verify NPM installation
+  become: yes
+  become_user: "{{ homebrew_user.stdout }}"
+  shell: |
+    npm -v
+  register: npm_version
+  changed_when: false
+
+- name: Display NPM version
+  debug:
+    var: npm_version.stdout_lines
