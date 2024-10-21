@@ -1,0 +1,44 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install required packages
+  apt:
+    name:
+      - python3-pip
+      - unzip
+    state: present
+
+- name: Download AWS CLI installation bundle
+  get_url:
+    url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+    dest: "/tmp/awscliv2.zip"
+
+- name: Unzip AWS CLI installation bundle
+  unarchive:
+    src: "/tmp/awscliv2.zip"
+    dest: "/tmp"
+    remote_src: yes
+
+- name: Install AWS CLI
+  command: "/tmp/aws/install"
+  args:
+    creates: "/usr/local/bin/aws"
+
+- name: Clean up installation files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/tmp/awscliv2.zip"
+    - "/tmp/aws"
+
+- name: Verify AWS CLI installation
+  command: aws --version
+  register: aws_version
+  changed_when: false
+
+- name: Display AWS CLI version
+  debug:
+    var: aws_version.stdout

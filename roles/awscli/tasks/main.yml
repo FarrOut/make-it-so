@@ -1,0 +1,12 @@
+---
+- name: Install AWS CLI on Ubuntu
+  include_tasks: 
+    file: install-ubuntu.yml
+    apply:
+      tags:
+        - aws
+        - awscli
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+      - aws
+      - awscli
