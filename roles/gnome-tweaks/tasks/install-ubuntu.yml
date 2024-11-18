@@ -1,0 +1,8 @@
+---
+
+- name: Install Gnome-Tweaks
+  apt:
+    name:
+      - gnome-tweaks
+    state: present
+    update_cache: yes

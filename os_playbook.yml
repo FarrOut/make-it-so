@@ -8,3 +8,34 @@
     - nvidia
     - night-light
     - homebrew
+    - gnome-tweaks
+
+- name: System Updates
+  hosts: all
+  become: yes
+  become_method: sudo
+  tags:
+  - system
+  - sys
+  - system-updates
+  - update
+  - updates
+
+  tasks:
+  - name: Get current user
+    ansible.builtin.command: whoami
+    become: false
+    register: current_user
+  - debug:
+      var: current_user.stdout
+
+  - name: Add daily system update cron job
+    cron:
+      name: Daily system update
+      minute: 0
+      hour: 22
+      job: sudo apt-get update -y && sudo apt-get full-upgrade -y
+      state: present
+    become: yes
+    become_method: sudo
+    become_user: "{{ current_user.stdout }}"    

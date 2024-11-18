@@ -7,7 +7,7 @@
     - python
     - node
     - docker
-    - vagrant
+    - vagrant    
     - virtualbox
     - git
     - autoenv

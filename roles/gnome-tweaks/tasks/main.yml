@@ -1,14 +1,16 @@
 ---
-- name: Install Homerew on Ubuntu
+- name: Install Gnome Tweaks on Ubuntu
   include_tasks: 
     file: install-ubuntu.yml
     apply:
       tags:
-        - brew
-        - homebrew
+        - tweaks
+        - gnome-tweaks
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   tags:
-      - brew
-      - homebrew
+      - tweaks
+      - gnome-tweaks
+
+
   vars:
     homebrew_prefix: /home/linuxbrew/.linuxbrew
